@@ -1,0 +1,341 @@
+<html>
+  <head>
+	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>i5ting_ztree_toc:GRADLE5</title>
+		<link href="toc/style/github-bf51422f4bb36427d391e4b75a1daa083c2d840e.css" media="all" rel="stylesheet" type="text/css"/>
+		<link href="toc/style/github2-d731afd4f624c99a4b19ad69f3083cd6d02b81d5.css" media="all" rel="stylesheet" type="text/css"/>
+		<link href="toc/css/zTreeStyle/zTreeStyle.css" media="all" rel="stylesheet" type="text/css"/>
+	  <style>
+		pre {
+		    counter-reset: line-numbering;
+		    border: solid 1px #d9d9d9;
+		    border-radius: 0;
+		    background: #fff;
+		    padding: 0;
+		    line-height: 23px;
+		    margin-bottom: 30px;
+		    white-space: pre;
+		    overflow-x: auto;
+		    word-break: inherit;
+		    word-wrap: inherit;
+		}
+
+		pre a::before {
+		  content: counter(line-numbering);
+		  counter-increment: line-numbering;
+		  padding-right: 1em; /* space after numbers */
+		  width: 25px;
+		  text-align: right;
+		  opacity: 0.7;
+		  display: inline-block;
+		  color: #aaa;
+		  background: #eee;
+		  margin-right: 16px;
+		  padding: 2px 10px;
+		  font-size: 13px;
+		  -webkit-touch-callout: none;
+		  -webkit-user-select: none;
+		  -khtml-user-select: none;
+		  -moz-user-select: none;
+		  -ms-user-select: none;
+		  user-select: none;
+		}
+
+		pre a:first-of-type::before {
+		  padding-top: 10px;
+		}
+
+		pre a:last-of-type::before {
+		  padding-bottom: 10px;
+		}
+
+		pre a:only-of-type::before {
+		  padding: 10px;
+		}
+
+		.highlight { background-color: #ffffcc } /* RIGHT */
+		</style>
+  </head>
+  <body>
+	  <div>
+				<div style='width:25%;'>
+						<ul id="tree" class="ztree" style='width:100%'>
+
+						</ul>
+				</div>
+        <div id='readme' style='width:70%;margin-left:20%;'>
+          	<article class='markdown-body'>
+            	<h1 id="-">打包</h1>
+<p><strong><em>如果我们项目的某些模块的功能是公用的，我们就需要对项目进行打包。</em></strong></p>
+<p>为什么要打包 jar 包，可以参考：<a href="https://www.zhihu.com/search?type=content&amp;q=jar%E5%8C%85%E9%82%A3%E4%BA%9B%E4%BA%8B">https://www.zhihu.com/search?type=content&amp;q=jar%E5%8C%85%E9%82%A3%E4%BA%9B%E4%BA%8B</a></p>
+<p>下面介绍最最基本的打包方法。</p>
+<h2 id="-">打包整个项目及其中的模块</h2>
+<p>如果需要将整个项目和项目中的所有模块单独打包，右侧 Gradle 中找到项目名下的 jar 或 war，如下图所示：</p>
+<p><img src="../img/F0.png" alt=""></p>
+<p>双击，即完成打包。</p>
+<p>也可以在终端使用命令:</p>
+<pre><code class="lang-bash">gradle jar
+</code></pre>
+<p>输出在：</p>
+<p><img src="../img/F1.png" alt=""></p>
+<p>查看 last 项目下的 module 模块，也被打包了：</p>
+<p><img src="../img/F2.png" alt=""></p>
+<h2 id="-">打包单个模块项目</h2>
+<p>如果只需要打包单独的 module 模块，只需要在右侧 Gradle 中找到 moudle 下的 jar 即可：</p>
+<p><img src="../img/F3.png" alt=""></p>
+<p>也可以在终端使用命令:</p>
+<pre><code class="lang-bash">gradle module:jar
+</code></pre>
+<p><em>自定义打包路径等可以参考：<a href="http://www.alloyteam.com/2015/03/shi-yong-gradle-da-bao-zhi-ding-bao-ming-he-lei-di-jar/">http://www.alloyteam.com/2015/03/shi-yong-gradle-da-bao-zhi-ding-bao-ming-he-lei-di-jar/</a></em></p>
+<h1 id="-">发布</h1>
+<p>如果想使项目对其它团队或组织成员可用，可能我们就需要将项目发布到远程的 maven 仓库。</p>
+<p>下面介绍 5 种不同的发布：</p>
+<p>1）发布到本地默认 maven 仓库；</p>
+<p>2）发布到本地任意位置；</p>
+<p>3）发布到远程 maven 仓库，以 Artifactory 为例；</p>
+<p>4）发布到公共的二进制仓库 以 Jfrog Bintray 的 Jcenter；</p>
+<h2 id="-maven-">发布到本地默认 maven 仓库</h2>
+<p>在 build.gradle 构建脚本中添加：</p>
+<pre><code class="lang-gradle">plugins {
+    id &#39;java&#39;
+    id &#39;war&#39;
+    id &#39;maven-publish&#39; // 引入发布需要的插件
+}
+</code></pre>
+<p>这个插件提供了一个 publishing 方法，我们就来传一个闭包参数：</p>
+<p><img src="../img/G1.png" alt=""></p>
+<pre><code class="lang-Gradle">publishing {
+    // 发布到本地默认maven仓库
+    publications {
+        myPublish(MavenPublication) { // 定义 Maven-publications 类型的发布包名字
+            //指定group/artifact/version信息，可以不填。
+            // 默认使用项目group/name/version作为groupId/artifactId/version
+            //groupId project.group
+            //artifactId project.name
+            //version project.version
+            from components.java   // 添加 jar 组件到发布包列表中
+            //  如果是war包则是from components.web
+        }
+    } // publishMyPublishPublicationToMavenLocal 即发布到本地默认的maven仓库
+}
+</code></pre>
+<p>点击 ‘大象’ 图标刷新，发现 Tasks 下多了个 publishing 。</p>
+<p><img src="../img/G0.png" alt=""></p>
+<p>展开，找到里面的：</p>
+<p><img src="../img/G2.png" alt=""></p>
+<p>双击。</p>
+<p><img src="../img/G3.png" alt=""></p>
+<p>看到这个，恭喜你，成功了！</p>
+<p>我们到本地默认 maven 仓库去看一看，我的是 ‘C:\Users\Administrator.m2\repository’ ,根据项目的坐标寻找：</p>
+<p><img src="../img/G4.png" alt=""></p>
+<h2 id="-">发布到本地任意位置</h2>
+<p>同样是给 publishing 方法一个闭包参数：</p>
+<pre><code class="lang-Gradle">publishing {
+    // publications 部分和发布到本地 maven 仓库一样
+    publications {
+        myPublish(MavenPublication) { // 定义 Maven-publications 类型的发布包名字
+            //指定group/artifact/version信息，可以不填。
+            // 默认使用项目group/name/version作为groupId/artifactId/version
+            //groupId project.group
+            //artifactId project.name
+            //version project.version
+            from components.java   // 添加 jar 组件到发布包列表中
+            //  如果是war包则是from components.web
+        }
+    } // publishMyPublishPublicationToMavenLocal 即发布到本地默认的maven仓库
+
+    // 只是加了个 repositories 方法
+    repositories {
+        maven{
+            name &#39;myLocal&#39;    // 自定义仓库名
+            url &quot;E://&quot;        // 自定义路径
+        }
+    } // 发布到本地自定义位置 publishMyPublishPublicationToMyLocalRepository
+}
+</code></pre>
+<p>刷新，任务里面多了个：</p>
+<p><img src="../img/G5.png" alt=""></p>
+<p>双击。</p>
+<p><img src="../img/G6.png" alt=""></p>
+<h2 id="-maven-">发布到远程 maven 仓库</h2>
+<p><em>以 Artifactory提供的远程 maven 仓库为例。</em></p>
+<p><img src="../img/G7.png" alt=""></p>
+<p>基于 Java 环境（先配置好 Java 环境）。</p>
+<p>下载 Artifactory
+<a href="https://sourceforge.net/projects/artifactory/">https://sourceforge.net/projects/artifactory/</a></p>
+<p>双击运行bin目录下的artifactory.bat文件，在浏览器地址栏输入：<a href="http://localhost:8081/artifactory/">http://localhost:8081/artifactory/</a> ，进入后台管理面板。</p>
+<p>如果上述操作后无法访问后台管理面板，还可配置 Artifactory 在 tomcat 上运行，参考教程：<a href="https://wenku.baidu.com/view/5ad2a533ee06eff9aef8071d.html">https://wenku.baidu.com/view/5ad2a533ee06eff9aef8071d.html</a></p>
+<p><strong>假设你已经完成了 Artifactory 的安装配置！</strong></p>
+<p>进入后台管理界面：</p>
+<p>1）<a href="http://localhost:8081/artifactory/">http://localhost:8081/artifactory/</a></p>
+<p>2）如果你是在 tomcat 上运行：启动 tomcat，访问 <a href="http://localhost:8080/artifactory/webapp/home.html?16">http://localhost:8080/artifactory/webapp/home.html?16</a></p>
+<p>使用默认的账号密码：admin/password 登录。</p>
+<p><strong>我们这里以在 tomcat 上运行 Artifactory 为例。</strong></p>
+<p>同样是给 publishing 方法一个闭包参数：</p>
+<p>publications 部分和发布到本地 maven 仓库一样，只是加了个 repositories 方法</p>
+<pre><code class="lang-gradle">publishing {
+    // publications 部分和发布到本地 maven 仓库一样
+    publications {
+        myPublish(MavenPublication) { // 定义 Maven-publications 类型的发布包名字
+            //指定group/artifact/version信息，可以不填。
+            // 默认使用项目group/name/version作为groupId/artifactId/version
+            //groupId project.group
+            //artifactId project.name
+            //version project.version
+            from components.java   // 添加 jar 组件到发布包列表中
+            //  如果是war包则是from components.web
+        }
+    } // publishMyPublishPublicationToMavenLocal 即发布到本地默认的maven仓库
+
+    // 只是加了个 repositories 方法
+    repositories {
+        maven{
+            name &#39;remoteArtifactory&#39;
+            url &#39;http://127.0.0.1:8080/artifactory/libs-snapshot-local&#39; // 发布的仓库位置
+            credentials { // 上传使用的凭证
+                username = &#39;admin&#39;     // artifactory_user
+                password = &#39;password&#39;  // artifactory_password
+            }
+        }
+    } // publishMyPublishPublicationToRemoteArtifactoryRepository
+}
+</code></pre>
+<p>刷新，运行一下任务：publishMyPublishPublicationToRemoteArtifactoryRepository。</p>
+<p>可以看到，上传成功，可供其他团队或组织中的相关人员下载。</p>
+<p><img src="../img/G9.png" alt=""></p>
+<h2 id="-">发布到公共的二进制仓库</h2>
+<p>  <em>公共的二进制仓库有 Jfrog Bintray 的 Jcenter 和 Maven Central，这里以 Jcenter 为例。</em></p>
+<p>需要先到 <a href="https://bintray.com/">https://bintray.com/</a> 注册账号，创建名为 maven的仓库，创建一个gradle包。</p>
+<p>参考教程：<a href="https://blog.csdn.net/roly_yu/article/details/53486731">https://blog.csdn.net/roly_yu/article/details/53486731</a></p>
+<p><strong>假设你已经注册号账号并创建了一个名为 maven 仓库和名为 gradle 的包！</strong></p>
+<p>在构建脚本的最上方加上：</p>
+<pre><code class="lang-gradle">buildscript {
+    dependencies {
+        // 引入发布到 Jcenter 需要的依赖
+        classpath &#39;com.novoda:bintray-release:0.9&#39;
+    }
+}
+</code></pre>
+<p>apply 一下</p>
+<pre><code class="lang-gradle">apply plugin: &#39;com.novoda.bintray-release&#39;
+</code></pre>
+<p><strong>还是为我们的 publishing 方法传一个闭包参数：</strong></p>
+<pre><code class="lang-gradle">publishing {
+
+    publications {
+        myPublish(MavenPublication){
+            from components.java
+        }
+    }
+
+    repositories {
+        maven {
+            name &#39;Bintray&#39;
+            url  &#39;https://api.bintray.com/maven/auggie/maven/gradle&#39;
+            // https://api.bintray.com/maven/用户名/默认的maven仓库/包名
+            credentials { // 上传用的凭证
+              username = &#39;auggie&#39;    // bintray_user 用户名
+                password = &#39;60b371a22224505b23d9cf0b8eb9798d706bc703&#39; // API Key 可在个人信息中查看
+            }
+        }
+    }
+}
+</code></pre>
+<p>还需要加一个 publish 方法说明项目的信息：</p>
+<pre><code class="lang-gradle">publish {
+    userOrg = &#39;auggie&#39; // 用户名
+    repoName = &#39;maven&#39; // 上传到 maven 仓库
+    groupId = &#39;cn.jt&#39; // 组名
+    artifactId = &#39;last&#39; // 上传到仓库的项目名，可自定义
+    publishVersion = &#39;1.0.0&#39; // 版本号，自定义，不能多次上传同一版本
+    uploadName = &#39;gradle&#39; // 上传到 gradle 包
+    desc = &#39;Oh hi, this is a nice description for nicelogger, right?&#39; // 描述
+//    website = &#39;https://github.com/auggie-12/nice-logger&#39; // github 地址
+}
+</code></pre>
+<p>刷新，执行任务：publishMyPublishPublicationToBintrayRepository。</p>
+<p>如果报 Could not PUT &quot;...&quot; 错误，可能是权限不足。</p>
+<p>可以尝试，IDEA 的终端输入：
+gradle clean build bintrayUpload -PbintrayUser=你的用户名 -PbintrayKey=你的APIKEY -PdryRun=false</p>
+<p>我们登录刚才在 <a href="https://bintray.com/">https://bintray.com/</a> 注册的账号，在 gradle 包中的 files 中看到上传成功：</p>
+<p><img src="../img/H0.png" alt=""></p>
+<p><strong>我们也可以把我们发布的包添加到 JCenter中，但这需要通过审核！</strong></p>
+<p><img src="../img/H1.png" alt=""></p>
+<p><strong>假设我们审核通过了</strong>，我们在左下角找到添加依赖的 Gradle 代码，复制：</p>
+<p><img src="../img/H2.png" alt=""></p>
+<p>改用 JCenter 仓库</p>
+<pre><code class="lang-gradle">repositories {
+    // mavenCentral()
+    jcenter()
+</code></pre>
+<p>可以在项目中添加我们发布到 JCenter 的项目了：</p>
+<pre><code class="lang-gradle">repositories {
+    implementation &#39;cn.jt:end:1.0.0&#39;
+}
+</code></pre>
+<h1 id="-">部署</h1>
+<p>以部署到 tomcat 服务器上为例。教程参考：<a href="https://www.cnblogs.com/shwo/p/9962441.html">https://www.cnblogs.com/shwo/p/9962441.html</a></p>
+<p>build.gradle:</p>
+<pre><code class="lang-gradle">// 使用tomcat插件部署
+
+apply plugin: &#39;idea&#39;
+apply plugin: &#39;war&#39; // 引入war插件, 它默认包含java插件
+apply plugin: &#39;com.bmuschko.tomcat&#39; //tomcat: 插件
+
+group &#39;cn.jt&#39;
+version &#39;1.0-SNAPSHOT&#39;
+
+sourceCompatibility = 1.8
+
+// tomcat: 以下配置会在第一次启动时下载插件二进制文件
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath &#39;com.bmuschko:gradle-tomcat-plugin:2.5&#39;
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    def tomcatVersion = &#39;8.5.16&#39;
+    tomcat &quot;org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}&quot;,
+            &quot;org.apache.tomcat.embed:tomcat-embed-logging-juli:8.5.2&quot;,
+            &quot;org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}&quot;
+}
+// tomcat: 一些协议设置
+tomcat {
+    httpProtocol = &#39;org.apache.coyote.http11.Http11Nio2Protocol&#39;
+    ajpProtocol  = &#39;org.apache.coyote.ajp.AjpNio2Protocol&#39;
+}
+</code></pre>
+<p>双击右侧 Gradle -&gt; Tasks -&gt; web application -&gt; tomcatRun:</p>
+<p><img src="../img/H4.png" alt=""></p>
+<p>访问：</p>
+<p><img src="../img/H3.png" alt=""></p>
+
+          	</article>
+        </div>
+		</div>
+  </body>
+</html>
+<script type="text/javascript" src="toc/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="toc/js/jquery.ztree.all-3.5.min.js"></script>
+<script type="text/javascript" src="toc/js/ztree_toc.js"></script>
+<script type="text/javascript" src="toc_conf.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+    var css_conf = eval(markdown_panel_style);
+    $('#readme').css(css_conf)
+
+    var conf = eval(jquery_ztree_toc_opts);
+		$('#tree').ztree_toc(conf);
+});
+//-->
+</SCRIPT>

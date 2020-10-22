@@ -1,0 +1,79 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "cn.jt",
+    "module": "last",
+    "version": "1.0-SNAPSHOT",
+    "attributes": {
+      "org.gradle.status": "integration"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "6.1.1",
+      "buildId": "mnm4slf7m5hrhdxog6bkkxazxe"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "org.hibernate",
+          "module": "hibernate-core",
+          "version": {
+            "requires": "3.6.3.Final"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "last-1.0-SNAPSHOT.jar",
+          "url": "last-1.0-20201020.113602-1.jar",
+          "size": 1732,
+          "sha512": "437c93f7cce3cf53a2653ab7e3720057651c34977e2ed54a30def3f4e47df478784d7c9b4ffdd005ec09246149cfbefbb5024a6434eba92a46e5c18416446720",
+          "sha256": "f7eb59203e80f0aeae30ace8e08faf40fc659becfa8941bd121b644715622424",
+          "sha1": "5818870e287b146431ccac7f7e56f9bf1cfc82cb",
+          "md5": "ec5a8b2353e6b93f5e1b8ea6e54f61c0"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "org.hibernate",
+          "module": "hibernate-core",
+          "version": {
+            "requires": "3.6.3.Final"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "last-1.0-SNAPSHOT.jar",
+          "url": "last-1.0-20201020.113602-1.jar",
+          "size": 1732,
+          "sha512": "437c93f7cce3cf53a2653ab7e3720057651c34977e2ed54a30def3f4e47df478784d7c9b4ffdd005ec09246149cfbefbb5024a6434eba92a46e5c18416446720",
+          "sha256": "f7eb59203e80f0aeae30ace8e08faf40fc659becfa8941bd121b644715622424",
+          "sha1": "5818870e287b146431ccac7f7e56f9bf1cfc82cb",
+          "md5": "ec5a8b2353e6b93f5e1b8ea6e54f61c0"
+        }
+      ]
+    }
+  ]
+}

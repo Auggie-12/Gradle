@@ -1,0 +1,105 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "cn.jt",
+    "module": "last",
+    "version": "1.0-SNAPSHOT",
+    "attributes": {
+      "org.gradle.status": "integration"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "6.6.1",
+      "buildId": "znwxdrldzraude27obda36jbby"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "org.hibernate",
+          "module": "hibernate-core",
+          "version": {
+            "requires": "3.6.3.Final"
+          }
+        },
+        {
+          "group": "org.hibernate",
+          "module": "hibernate-core",
+          "version": {
+            "requires": "3.6.3.Final"
+          },
+          "excludes": [
+            {
+              "group": "org.slf4j",
+              "module": "slf4j-api"
+            }
+          ]
+        }
+      ],
+      "files": [
+        {
+          "name": "last-1.0.0.jar",
+          "url": "last-1.0.0.jar",
+          "size": 1384,
+          "sha512": "0c2f3cfb77a56ad535949b9a86e1cc618634dd2c7200d56030138f1fa620d67bcebd318a5cd133463eabfc7547f8d93fbb115010e90d99aa60ef099c04c96d0d",
+          "sha256": "0aced7da8fe6df3dbe49232da55978956c1f2d0965e85d53bfb47d6c855b7516",
+          "sha1": "bfd38179ef55520bb7d42ee8c21744d3d83886b8",
+          "md5": "1c68ccc663eb7d469939b56a21aed7b7"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "org.hibernate",
+          "module": "hibernate-core",
+          "version": {
+            "requires": "3.6.3.Final"
+          }
+        },
+        {
+          "group": "org.hibernate",
+          "module": "hibernate-core",
+          "version": {
+            "requires": "3.6.3.Final"
+          },
+          "excludes": [
+            {
+              "group": "org.slf4j",
+              "module": "slf4j-api"
+            }
+          ]
+        }
+      ],
+      "files": [
+        {
+          "name": "last-1.0.0.jar",
+          "url": "last-1.0.0.jar",
+          "size": 1384,
+          "sha512": "0c2f3cfb77a56ad535949b9a86e1cc618634dd2c7200d56030138f1fa620d67bcebd318a5cd133463eabfc7547f8d93fbb115010e90d99aa60ef099c04c96d0d",
+          "sha256": "0aced7da8fe6df3dbe49232da55978956c1f2d0965e85d53bfb47d6c855b7516",
+          "sha1": "bfd38179ef55520bb7d42ee8c21744d3d83886b8",
+          "md5": "1c68ccc663eb7d469939b56a21aed7b7"
+        }
+      ]
+    }
+  ]
+}

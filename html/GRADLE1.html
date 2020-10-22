@@ -1,0 +1,151 @@
+<html>
+  <head>
+	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>i5ting_ztree_toc:GRADLE1</title>
+		<link href="toc/style/github-bf51422f4bb36427d391e4b75a1daa083c2d840e.css" media="all" rel="stylesheet" type="text/css"/>
+		<link href="toc/style/github2-d731afd4f624c99a4b19ad69f3083cd6d02b81d5.css" media="all" rel="stylesheet" type="text/css"/>
+		<link href="toc/css/zTreeStyle/zTreeStyle.css" media="all" rel="stylesheet" type="text/css"/>
+	  <style>
+		pre {
+		    counter-reset: line-numbering;
+		    border: solid 1px #d9d9d9;
+		    border-radius: 0;
+		    background: #fff;
+		    padding: 0;
+		    line-height: 23px;
+		    margin-bottom: 30px;
+		    white-space: pre;
+		    overflow-x: auto;
+		    word-break: inherit;
+		    word-wrap: inherit;
+		}
+
+		pre a::before {
+		  content: counter(line-numbering);
+		  counter-increment: line-numbering;
+		  padding-right: 1em; /* space after numbers */
+		  width: 25px;
+		  text-align: right;
+		  opacity: 0.7;
+		  display: inline-block;
+		  color: #aaa;
+		  background: #eee;
+		  margin-right: 16px;
+		  padding: 2px 10px;
+		  font-size: 13px;
+		  -webkit-touch-callout: none;
+		  -webkit-user-select: none;
+		  -khtml-user-select: none;
+		  -moz-user-select: none;
+		  -ms-user-select: none;
+		  user-select: none;
+		}
+
+		pre a:first-of-type::before {
+		  padding-top: 10px;
+		}
+
+		pre a:last-of-type::before {
+		  padding-bottom: 10px;
+		}
+
+		pre a:only-of-type::before {
+		  padding: 10px;
+		}
+
+		.highlight { background-color: #ffffcc } /* RIGHT */
+		</style>
+  </head>
+  <body>
+	  <div>
+				<div style='width:25%;'>
+						<ul id="tree" class="ztree" style='width:100%'>
+
+						</ul>
+				</div>
+        <div id='readme' style='width:70%;margin-left:20%;'>
+          	<article class='markdown-body'>
+            	<h1 id="gradle-">Gradle下载及配置</h1>
+<h2 id="-gradle">下载 Gradle</h2>
+<p>下载网址：<a href="https://gradle.org/releases/">https://gradle.org/releases/</a></p>
+<p><img src="../img/A0.png" alt=""></p>
+<h2 id="-">解压</h2>
+<p>记住解压的路径（例D:\Gradle\gradle-6.6.1）</p>
+<h2 id="-">配置环境变量</h2>
+<p>1）新增系统变量：GRADLE_HOME 变量值：
+   D:\Gradle\gradle-6.6.1（解压路径）</p>
+<p>2）新增PATH环境变量：%GRADLE_HOME%\bin</p>
+<h2 id="-">检验是否配置完成</h2>
+<p>cmd中输入gradle -v 若显示版本号则配置完成。</p>
+<p><img src="../img/A1.png" alt=""></p>
+<h1 id="groovy-">Groovy的基本语法</h1>
+<p>1）Groovy类和Java是二进制兼容的，Groovy编译器产生的字节码与Java编译器产生的字节码是完全一样的。</p>
+<p>2）<strong>对于JVM而言，Groovy和Java是完全一样的</strong>，因此，Groovy能够完全使用各种Java API。</p>
+<p>3）Groovy也是一门面向对象的语言。也就是说，Groovy中每一个事物最终都会被当做某些类的一个实例对象。</p>
+<p><strong>4）groovy支持函数式编程，不需要main函数。</strong></p>
+<p>5）groovy支持单元测试和模拟（对象），可以简化测试。</p>
+<p>6）groovy中默认都是public（类、成员属性、方法等），groovy接口中不允许定义非public的方法。</p>
+<p>7）groovy类会默认会成员变量生成getter与setter方法。无论你是直接使用还是调用get/set，最终都是调用     get/set方法，如：person.name相当于person.getName()</p>
+<p><strong>8）在Groovy可以用def定义无类型的变量和返回值为无类型的方法。</strong></p>
+<p><strong>部分语法代码演示:</strong></p>
+<pre><code class="lang-Groovy">// 1.句尾分号可以省略
+// 2.括号可以省略
+// 3.定义变量用 def 例如
+def i=10
+
+// 4.定义集合，由于{ }是给闭包使用，所以定义集合或数据要用[ ]
+def list=[‘a’,’b’]
+list  &lt;&lt; ‘c’
+println list.get(2);
+
+// 5.定义一个map
+def map=[&#39;key1&#39;:&#39;value1&#39;,&#39;key2&#39;:value2]
+map.key3=&#39;value3&#39;
+println map.get(“key3”)
+
+// 6.Groovy中的闭包
+
+// 闭包其实是一段代码块，我们主要把闭包当作参数来使用
+ def b1={
+　　println “hello b1”
+}
+
+// 定义一个方法，方法里面需要闭包类型的参数
+ def method1(Closure closure){
+　　closure()
+}
+method1(b1)
+
+// 7.定义一个闭包带参数
+def b2={
+　　V -&gt;
+　　println “hello ${v}”
+}
+
+ def method2(Closure closure){
+　　closure(“b2”)
+}
+method2(b2)
+</code></pre>
+
+          	</article>
+        </div>
+		</div>
+  </body>
+</html>
+<script type="text/javascript" src="toc/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="toc/js/jquery.ztree.all-3.5.min.js"></script>
+<script type="text/javascript" src="toc/js/ztree_toc.js"></script>
+<script type="text/javascript" src="toc_conf.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+    var css_conf = eval(markdown_panel_style);
+    $('#readme').css(css_conf)
+
+    var conf = eval(jquery_ztree_toc_opts);
+		$('#tree').ztree_toc(conf);
+});
+//-->
+</SCRIPT>

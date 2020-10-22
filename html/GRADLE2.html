@@ -1,0 +1,201 @@
+<html>
+  <head>
+	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>i5ting_ztree_toc:GRADLE2</title>
+		<link href="toc/style/github-bf51422f4bb36427d391e4b75a1daa083c2d840e.css" media="all" rel="stylesheet" type="text/css"/>
+		<link href="toc/style/github2-d731afd4f624c99a4b19ad69f3083cd6d02b81d5.css" media="all" rel="stylesheet" type="text/css"/>
+		<link href="toc/css/zTreeStyle/zTreeStyle.css" media="all" rel="stylesheet" type="text/css"/>
+	  <style>
+		pre {
+		    counter-reset: line-numbering;
+		    border: solid 1px #d9d9d9;
+		    border-radius: 0;
+		    background: #fff;
+		    padding: 0;
+		    line-height: 23px;
+		    margin-bottom: 30px;
+		    white-space: pre;
+		    overflow-x: auto;
+		    word-break: inherit;
+		    word-wrap: inherit;
+		}
+
+		pre a::before {
+		  content: counter(line-numbering);
+		  counter-increment: line-numbering;
+		  padding-right: 1em; /* space after numbers */
+		  width: 25px;
+		  text-align: right;
+		  opacity: 0.7;
+		  display: inline-block;
+		  color: #aaa;
+		  background: #eee;
+		  margin-right: 16px;
+		  padding: 2px 10px;
+		  font-size: 13px;
+		  -webkit-touch-callout: none;
+		  -webkit-user-select: none;
+		  -khtml-user-select: none;
+		  -moz-user-select: none;
+		  -ms-user-select: none;
+		  user-select: none;
+		}
+
+		pre a:first-of-type::before {
+		  padding-top: 10px;
+		}
+
+		pre a:last-of-type::before {
+		  padding-bottom: 10px;
+		}
+
+		pre a:only-of-type::before {
+		  padding: 10px;
+		}
+
+		.highlight { background-color: #ffffcc } /* RIGHT */
+		</style>
+  </head>
+  <body>
+	  <div>
+				<div style='width:25%;'>
+						<ul id="tree" class="ztree" style='width:100%'>
+
+						</ul>
+				</div>
+        <div id='readme' style='width:70%;margin-left:20%;'>
+          	<article class='markdown-body'>
+            	<h1 id="-gradle-">命令行下gradle的使用</h1>
+<h2 id="project-">project的创建</h2>
+<p><strong>mkdir filename</strong>创建项目所在文件夹</p>
+<p><strong>gradle init</strong>创建项目</p>
+<p><img src="../img/project创建.png" alt=""></p>
+<p>其中project type有四种类型分别是：</p>
+<p>1、基础类型
+2、应用类型
+3、库类型
+4、gradle插件</p>
+<p>build script DSL（构建脚本语言）：</p>
+<p>1、groovy
+2、kotlin</p>
+<h2 id="-project-">创建的project里各文件的作用</h2>
+<p><img src="../img/文件.png" alt=""></p>
+<p><strong>gradle</strong> 包含gradle wapper的可执行库以及一些配置属性</p>
+<p><strong>gradlew、gradlew.bat</strong>分别是基于UNIX与WINDOWS的gradle wapper脚本</p>
+<p><strong>build.gradle</strong>项目配置脚本，用于配置当前项目中的任务</p>
+<p><strong>setting.gradle</strong>用于配置哪些项目参与构建的配置脚本</p>
+<h2 id="task-">task的创建以及基本操作</h2>
+<h3 id="task-build-gradle-">task的创建（在build.gradle里创建）</h3>
+<p>task taskname(type, group, description,depensOn) {}</p>
+<p><strong>type</strong>:表示任务的种类，比如copy、zip等（必要）</p>
+<p><strong>group</strong>：表示任务所属的组（非必要）</p>
+<p><strong>description</strong>：表示对任务的描述（非必要）</p>
+<p><strong>depensOn</strong>：表示任务之间的依赖关系（非必要）</p>
+<pre><code class="lang-java">task compile {
+    doLast {
+        println &#39;hello compile&#39;
+    }
+}
+
+
+task compile2 {
+    doLast {
+        println &#39;hello compiling2&#39;
+    }
+}
+
+task compileTest(dependsOn:compile) {
+    doLast {
+        println &#39;hello compileTest&#39;
+    }
+}
+</code></pre>
+<p><strong>dependsOn:compile</strong> 表示compileTest依赖于compile即在运行compileTest时会先执行compile在执行compileTest</p>
+<h3 id="task-">task的运行以及查看</h3>
+<p><strong>gradle taskname1 taskname2</strong> 按照先后运行名为taskname1、taskname2的任务</p>
+<p><img src="../img/task_run.png" alt=""></p>
+<p>有依赖关系时：</p>
+<p><img src="../img/depenson.png" alt=""></p>
+<p><strong>gradle tasks --all</strong> 查看所有任务</p>
+<p><img src="../img/allTask.png" alt=""></p>
+<p><strong>gradle help --task taskname</strong>查看taskname的详细信息</p>
+<p><img src="../img/msg.png" alt=""></p>
+<p>其中的type、description、group都是创建任务时就已经确定，path是关于build.gradle文件内的任务名</p>
+<p><strong>gradle taskname1 -x taskname2</strong> 运行taskname1但不运行taskname1里的taskname2任务，主要用来避免依赖关系的运行</p>
+<p><img src="../img/depens.png" alt=""></p>
+<p><strong>-m标签</strong> 使用此标签可以查看任务的执行顺序，并不会真的执行（适合多依赖关系）</p>
+<p><img src="../img/-m.png" alt=""></p>
+<p><strong>-q标签</strong> 简化输出内容，用来屏蔽其他辅助型的输出，只输出task的输出以及错误流</p>
+<p><img src="../img/-q.png" alt=""></p>
+<h2 id="-">插件的使用</h2>
+<p>插件的使用需要在build.gradle文件里导入插件</p>
+<pre><code class="lang-java">plugins{
+    id &quot;插件名&quot;//比如 java,web,base等等
+}
+</code></pre>
+<p>比如我需要对某个文件进行打包那么代码如下：</p>
+<pre><code class="lang-java">plugins {
+    id &quot;base&quot;
+}
+
+task zip(type: Zip) {
+    from &quot;gradle&quot;
+    archiveFileName = &quot;demo1.zip&quot;
+}
+</code></pre>
+<p><img src="../img/cg.png" alt=""></p>
+<p>这里表示使用插件base将文件名为gradle的文件打包到名为demo1.zip的文件里。这些打包好的文件会统一放在项目里的新建build/distributions文件夹里（运行任务后自动创建）</p>
+<p><img src="../img/path.png" alt=""></p>
+<p><strong>注意这里需要表明task的类型type，若未注明则在任务执行时会报错</strong></p>
+<pre><code class="lang-java">plugins {
+    id &quot;base&quot;
+}
+
+task zip {
+    from &quot;gradle&quot;
+    archiveFileName = &quot;demo1.zip&quot;
+}
+</code></pre>
+<p><img src="../img/error.png" alt=""></p>
+<h2 id="-">项目属性的查看</h2>
+<p><strong>gradle properties</strong> 查看项目的所有属性</p>
+<p><img src="../img/demo.png" alt=""></p>
+<p>如果需要标注版本号，只需在build.gradle里插入：</p>
+<pre><code class="lang-java">version 1.0//版本号
+</code></pre>
+<p>之后再次查看项目属性时便可以看到版本信息</p>
+<h2 id="-">项目日志查看</h2>
+<p><strong>gradle --profile</strong></p>
+<p>运行后在build/reports/profile(自动生成)会生成一个html文件打开便可以查看项目日志</p>
+<p><img src="../img/1.png" alt=""></p>
+<p><img src="../img/2.png" alt=""></p>
+<p><img src="../img/3.png" alt=""></p>
+<h2 id="-">项目分享</h2>
+<p><strong>gradle build --scan</strong> 使用后会生成链接</p>
+<p><img src="../img/a.png" alt=""></p>
+<p><strong>输入yes获取链接</strong></p>
+<p><img src="../img/b.png" alt=""></p>
+<p>浏览器打开链接输入邮箱激活后便可进行分享</p>
+<p><img src="../img/c.png" alt=""></p>
+
+          	</article>
+        </div>
+		</div>
+  </body>
+</html>
+<script type="text/javascript" src="toc/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="toc/js/jquery.ztree.all-3.5.min.js"></script>
+<script type="text/javascript" src="toc/js/ztree_toc.js"></script>
+<script type="text/javascript" src="toc_conf.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+    var css_conf = eval(markdown_panel_style);
+    $('#readme').css(css_conf)
+
+    var conf = eval(jquery_ztree_toc_opts);
+		$('#tree').ztree_toc(conf);
+});
+//-->
+</SCRIPT>

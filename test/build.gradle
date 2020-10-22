@@ -1,0 +1,37 @@
+// 使用tomcat插件部署
+
+apply plugin: 'java'
+apply plugin: 'war' // 引入war插件, 它默认包含java插件
+apply plugin: 'com.bmuschko.tomcat' //tomcat: 插件
+
+group 'cn.jt'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+// tomcat: 以下配置会在第一次启动时下载插件二进制文件
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.bmuschko:gradle-tomcat-plugin:2.5'
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    def tomcatVersion = '8.5.16'
+    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
+            "org.apache.tomcat.embed:tomcat-embed-logging-juli:8.5.2",
+            "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
+}
+// tomcat: 一些协议设置
+tomcat {
+    httpProtocol = 'org.apache.coyote.http11.Http11Nio2Protocol'
+    ajpProtocol  = 'org.apache.coyote.ajp.AjpNio2Protocol'
+}
+
