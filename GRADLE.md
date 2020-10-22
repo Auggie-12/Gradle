@@ -2,7 +2,7 @@
 ## 下载 Gradle
 下载网址：https://gradle.org/releases/
 
-![](img/A0.png)
+![](./img/A0.png)
 
 ## 解压
 记住解压的路径（例D:\Gradle\gradle-6.6.1）
